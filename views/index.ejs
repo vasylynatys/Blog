@@ -1,0 +1,29 @@
+<%- include('./partials/header.ejs') %> <%- include('./partials/nav.ejs') %>
+
+<div class="container py-5" style="max-width: 520px; margin: 0 auto">
+    <div class="card shadow-lg border-0">
+        <div class="card-body">
+            <h1 class="text-center mb-4"><%= title %></h1>
+
+            <p class="text-muted text-center mb-3">
+                Welcome to our blog platform! This simple application lets you
+                create, edit, and delete blog posts with ease. It is powered by
+                modern technologies to provide a smooth user experience.
+            </p>
+
+            <p class="text-center text-muted">
+                Backend: <strong>Node.js & Express.js</strong><br />
+                Database: <strong>MongoDB & Mongoose</strong><br />
+                Designed for simplicity and scalability.
+            </p>
+
+            <p class="text-center mt-4">
+                <a href="/add-post" class="btn btn-primary w-100"
+                    >Create a New Post</a
+                >
+            </p>
+        </div>
+    </div>
+</div>
+
+<%- include('./partials/footer.ejs') %>

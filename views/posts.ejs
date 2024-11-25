@@ -1,0 +1,83 @@
+<%- include('./partials/header.ejs') %> <%- include('./partials/nav.ejs') %>
+
+<div class="info1 container py-5">
+    <% if (posts.length) { %>
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white text-center">
+            <h1>All Posts</h1>
+        </div>
+        <div class="card-body">
+            <p class="text-muted text-center mb-4">
+                Browse through all posts created by our users. Edit or delete
+                posts directly from the list below.
+            </p>
+            <table class="table table-hover text-center">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Content</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% posts.forEach((post) => { %>
+                    <tr id="id_<%= post._id %>">
+                        <td><%= post.title %></td>
+                        <td><%= post.author %></td>
+                        <td>
+                            <%= post.content ? post.content : 'No Content' %>
+                        </td>
+                        <td>
+                            <a
+                                class="btn btn-outline-warning btn-sm"
+                                href="/edit-post/<%= post._id %>"
+                                title="Edit Post"
+                            >
+                                Edit
+                            </a>
+                        </td>
+                        <td>
+                            <button
+                                class="btn btn-outline-danger btn-sm confirmDeletion"
+                                data-id="<%= post._id %>"
+                                title="Delete Post"
+                            >
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <% } else { %>
+    <div class="text-center mt-5">
+        <h1 class="text-danger">No Posts Found</h1>
+        <p class="text-muted mb-4">
+            Start by adding a new post to get started!
+        </p>
+        <a href="/add-post" class="btn btn-success">Add New Post</a>
+    </div>
+    <% } %>
+</div>
+
+<script>
+    document.addEventListener("click", (e) => {
+        const id = e.target?.closest(".confirmDeletion")?.dataset?.id;
+        if (id && confirm("Are you sure you want to delete this post?")) {
+            fetch(`/posts/${id}`, { method: "DELETE" })
+                .then(() => {
+                    document.getElementById(`id_${id}`)?.remove();
+                })
+                .catch((err) => {
+                    console.error(err);
+                    alert("Failed to delete post. Try again.");
+                });
+        }
+    });
+</script>
+
+<%- include('./partials/footer.ejs') %>
